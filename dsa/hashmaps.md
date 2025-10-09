@@ -26,6 +26,9 @@ Retrieving Data:
 # Practice
 
 ## Group Anagrams
+
+Letters are keys as sorted tuple and values are array of words containing those letters
+`{ ('a', 'e', 't'): ["eat", "tea"] }`
  ```python
  from collections import defaultdict
  class Solution:
@@ -34,6 +37,7 @@ Retrieving Data:
         result = []
 
         for s in strs:
+            # keys must be immutable, so tuple is used
             sorted_s = tuple(sorted(s))
             anagram_map[sorted_s].append(s)
 
@@ -42,5 +46,31 @@ Retrieving Data:
 
         return result
 
-print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+print(Solution.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+ ```
+
+
+Store tuple of letter count across all letters as key and array of words as value
+`{ (0,1,0...1,0,etc.): ["eat", "tea"] }`
+```python
+from collections import defaultdict
+
+class Solution:
+    def groupAnagrams(self, strs):
+        anagram_map = defaultdict(list)
+
+        for s in strs:
+            # Count frequency of each letter
+            count = [0] * 26
+            for c in s:
+                count[ord(c) - ord('a')] += 1
+
+            # Use the count tuple as a key
+            anagram_map[tuple(count)].append(s)
+
+
+        return list(anagram_map.values())
+
+# Test it
+print(Solution().groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
  ```
