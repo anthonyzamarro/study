@@ -31,6 +31,7 @@ const binarySearch = (needle, hayStack) => {
         }
     }
 
+    // no target found
     return -1
 }
 
